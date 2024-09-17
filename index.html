@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Video Page</title>
+    
+    <!-- Add favicon -->
+    <link rel="icon" type="image/png" href="Freelancerflow.jpg">
+    
+    <style>
+        /* Make video fill the screen */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Video element -->
+    <video id="intro-video" playsinline>
+        <source src="letsgo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        const video = document.getElementById('intro-video');
+
+        // Try to play the video on page load with sound
+        window.onload = function () {
+            video.muted = false; // Unmute the video
+
+            // Try to play the video, handling any errors due to autoplay policies
+            video.play().then(() => {
+                console.log('Video is playing with sound');
+            }).catch(error => {
+                console.log('Autoplay with sound blocked: ' + error);
+                // If autoplay with sound is blocked, start muted first, then allow interaction to unmute
+                video.muted = true;
+                video.play().then(() => {
+                    console.log('Video playing muted');
+                });
+            });
+        };
+
+        // Event listener for video end to redirect
+        video.addEventListener('ended', function () {
+            window.location.href = 'https://freelancergram.vercel.app/';
+        });
+    </script>
+
+</body>
+</html>
