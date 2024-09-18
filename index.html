@@ -1,13 +1,12 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freelancerflow</title>
     
-    <!-- Add favicon -->
     <link rel="icon" type="image/png" href="Freelancerflow.jpg">
     
-    <!-- Open Graph meta tags for better sharing -->
     <meta property="og:title" content="FreelancerFlow">
     <meta property="og:description" content="FreelancerFlow is a platform that bridges the gap between skilled freelancers and hirers seeking affordable talent. Focused on empowering unemployed individuals with limited skills.">
     <meta property="og:image" content="Freelancerflow.jpg">
@@ -15,7 +14,6 @@
     <meta property="og:type" content="website">
 
     <style>
-        /* Make video fill the screen */
         body, html {
             margin: 0;
             padding: 0;
@@ -37,7 +35,6 @@
 
 <body>
 
-    <!-- Video element -->
     <video id="intro-video" playsinline>
         <source src="letsgo (online-video-cutter.com).mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -46,21 +43,24 @@
     <script>
         const video = document.getElementById('intro-video');
 
-        // Try to play the video on page load with sound
-        window.onload = function () {
-            video.muted = false; // Unmute the video
-
-            // Try to play the video, handling any errors due to autoplay policies
+        // Function to play the video
+        function playVideo() {
             video.play().then(() => {
                 console.log('Video is playing with sound');
             }).catch(error => {
                 console.log('Autoplay with sound blocked: ' + error);
-                // If autoplay with sound is blocked, start muted first, then allow interaction to unmute
+                // Fallback: mute the video and try again
                 video.muted = true;
                 video.play().then(() => {
-                    console.log('Video playing');
+                    console.log('Video playing muted');
                 });
             });
+        }
+
+        // Attempt to play the video on page load
+        window.onload = function () {
+            // Initially try to play with sound
+            playVideo();
         };
 
         // Event listener for video end to redirect
