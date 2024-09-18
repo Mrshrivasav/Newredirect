@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freelancerflow</title>
     
-    <!-- Add favicon -->
     <link rel="icon" type="image/png" href="Freelancerflow.jpg">
     
-    <!-- Open Graph meta tags for better sharing -->
     <meta property="og:title" content="FreelancerFlow">
     <meta property="og:description" content="FreelancerFlow is a platform that bridges the gap between skilled freelancers and hirers seeking affordable talent. Focused on empowering unemployed individuals with limited skills.">
     <meta property="og:image" content="Freelancerflow.jpg">
@@ -16,7 +14,6 @@
     <meta property="og:type" content="website">
 
     <style>
-        /* Make video fill the screen */
         body, html {
             margin: 0;
             padding: 0;
@@ -33,36 +30,48 @@
             height: 100%;
             object-fit: cover;
         }
+
+        #unmute-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 10; /* Ensure the button is above the video */
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Video element -->
-    <video id="intro-video" playsinline>
+    <video id="intro-video" playsinline muted>
         <source src="letsgo (online-video-cutter.com).mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
+    <button id="unmute-button">Unmute</button>
+
     <script>
         const video = document.getElementById('intro-video');
+        const unmuteButton = document.getElementById('unmute-button');
 
-        // Try to play the video on page load with sound
+        // Auto-play muted video on page load
         window.onload = function () {
-            video.muted = false; // Unmute the video
-
-            // Try to play the video, handling any errors due to autoplay policies
-            video.play().then(() => {
-                console.log('Video is playing with sound');
-            }).catch(error => {
+            video.play().catch(error => {
                 console.log('Autoplay with sound blocked: ' + error);
-                // If autoplay with sound is blocked, start muted first, then allow interaction to unmute
-                video.muted = true;
-                video.play().then(() => {
-                    console.log('Video playing muted');
-                });
             });
         };
+
+        // Unmute and play the video on button click
+        unmuteButton.addEventListener('click', function() {
+            video.muted = false;
+            video.play();
+            unmuteButton.style.display = 'none'; // Hide the button after unmuting
+        });
 
         // Event listener for video end to redirect
         video.addEventListener('ended', function () {
